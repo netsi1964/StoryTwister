@@ -78,6 +78,9 @@ async function createGithubPage(
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
 
   let requestOptions;
+  const content = b64(
+    `# ${header}\n\n${body}\n\n-----\n${getPrettyDateTimeMarkdown()}`
+  );
 
   if (operation === "update") {
     // Define the PATCH request options
@@ -89,9 +92,7 @@ async function createGithubPage(
       },
       body: JSON.stringify({
         message: `Update file via Deno Deploy: ${new Date()}`,
-        content: btoa(
-          `# ${header}\n![Generated using Story Twister GPT](${image} "Generated using Story Twister GPT")\n\n${body}`
-        ), // Encode the new content as base64
+        content,
         sha,
         branch: "main",
         committer: {
@@ -114,9 +115,7 @@ async function createGithubPage(
       },
       body: JSON.stringify({
         message: `Create a new file via Deno Deploy: ${new Date()}`, // Adjust the commit message to reflect file creation
-        content: btoa(
-          `# ${header}\n![Generated using Story Twister GPT](${image} "Generated using Story Twister GPT")\n\n${body}`
-        ), // Base64 encode the new content
+        content,
         // Remove the sha line since it's not needed for a new file
         branch: "main", // Specify the branch if needed, otherwise it defaults to the default branch
         committer: {
@@ -176,6 +175,25 @@ async function getFileSHA(
   }
 }
 
+function b64(text: string): string {
+  // First, try using Deno's built-in btoa function
+  try {
+    return btoa(text);
+  } catch (e) {
+    console.log("Failed base64 encoding using btoa, trying another way...");
+    // If btoa is not available or fails, use TextEncoder and manual base64 conversion
+    try {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const base64 = btoa(String.fromCharCode(...data));
+      return base64;
+    } catch (ee) {
+      console.log("Failed base64 encoding using TextEncoder...");
+    }
+  }
+  return "";
+}
+
 function getFilenameFromHeader(header) {
   // Convert to lowercase
   let filename = header.toLowerCase().trim();
@@ -190,4 +208,25 @@ function getFilenameFromHeader(header) {
   filename += ".md";
 
   return filename;
+}
+
+function getPrettyDateTimeMarkdown() {
+  const now = new Date();
+
+  // Use Intl.DateTimeFormat to format the date and time in a pretty English format
+  const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+    timeZoneName: "short",
+  });
+
+  const prettyDateTime = dateFormatter.format(now);
+
+  // Format as Markdown
+  return `#### Created: ${prettyDateTime}`;
 }
