@@ -4,7 +4,7 @@ let githubAccessToken: string;
 const owner = "netsi1964";
 const repo = "StoryTwister";
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
   // Increment a count using Deno KV
   await kv.atomic().sum(["visitors"], 1n).commit();
 
@@ -14,11 +14,36 @@ Deno.serve(async () => {
   // Get the latest visitor count
   const count = await kv.get(["visitors"]);
 
-  await updateGithubPage(
-    `# This was created on the ${count.value} visit to the domain!`
-  );
+  // Get the header and body from the request querystring
+  let header = "# default header";
+  let body = "Default body";
+  let image = "";
+  const url = new URL(req.url);
+  const queryHeader = url.searchParams.get("header");
+  const queryBody = url.searchParams.get("body");
+  const queryImage = url.searchParams.get("image");
+  if (queryHeader) {
+    header = queryHeader;
+  }
+  if (queryBody) {
+    body = queryBody;
+  }
+  if (queryImage) {
+    image = queryImage;
+  }
+  console.log(header, body, image);
 
-  return new Response(`This branch has been run ${count.value} times`);
+  header = header ?? "header";
+  body = body ?? "body";
+
+  const filePath = getFilenameFromHeader(header);
+  await createGithubPage(filePath, header, body, image);
+
+  return new Response(
+    `Your story will be visible here: https://netsi1964.github.io/StoryTwister/${
+      filePath.split(".md")[0]
+    }`
+  );
 });
 
 function loginToGithub() {
@@ -34,39 +59,77 @@ function loginToGithub() {
   console.info("Access to Github granted");
 }
 
-async function updateGithubPage(md: string) {
-  const filePath = "fromDeno.md";
-
+async function createGithubPage(
+  filePath: string,
+  header: string,
+  body: string,
+  image: string
+) {
   const sha = await getFileSHA(owner, repo, filePath, githubAccessToken);
+  let operation = "Unknown";
   if (sha) {
+    operation = "update";
     console.log("Current SHA of the file:", sha);
+  } else {
+    operation = "create";
   }
 
   // Define the GitHub API endpoint for updating a file
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
 
-  // Define the PATCH request options
-  const requestOptions = {
-    method: "PUT",
-    headers: {
-      Authorization: `token ${githubAccessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      message: `Update file via Deno Deploy: ${new Date()}`,
-      content: btoa(md), // Encode the new content as base64
-      sha,
-      branch: "main",
-      committer: {
-        name: "Sten Hougaard",
-        email: "netsi1964@gmail.com",
+  let requestOptions;
+
+  if (operation === "update") {
+    // Define the PATCH request options
+    requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+        "Content-Type": "application/json",
       },
-      author: {
-        name: "Sten Hougaard",
-        email: "netsi1964@gmail.com",
+      body: JSON.stringify({
+        message: `Update file via Deno Deploy: ${new Date()}`,
+        content: btoa(
+          `# ${header}\n![Generated using Story Twister GPT](${image} "Generated using Story Twister GPT")\n\n${body}`
+        ), // Encode the new content as base64
+        sha,
+        branch: "main",
+        committer: {
+          name: "Sten Hougaard",
+          email: "netsi1964@gmail.com",
+        },
+        author: {
+          name: "Sten Hougaard",
+          email: "netsi1964@gmail.com",
+        },
+      }),
+    };
+  } else {
+    // CREATE
+    requestOptions = {
+      method: "PUT", // Use PUT method to create or update a file
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+        "Content-Type": "application/json",
       },
-    }),
-  };
+      body: JSON.stringify({
+        message: `Create a new file via Deno Deploy: ${new Date()}`, // Adjust the commit message to reflect file creation
+        content: btoa(
+          `# ${header}\n![Generated using Story Twister GPT](${image} "Generated using Story Twister GPT")\n\n${body}`
+        ), // Base64 encode the new content
+        // Remove the sha line since it's not needed for a new file
+        branch: "main", // Specify the branch if needed, otherwise it defaults to the default branch
+        committer: {
+          name: "Sten Hougaard",
+          email: "netsi1964@gmail.com",
+        },
+        author: {
+          name: "Sten Hougaard",
+          email: "netsi1964@gmail.com",
+        },
+      }),
+    };
+  }
 
   // Make the PATCH request using Deno's fetch API
   const response = await fetch(apiUrl, requestOptions);
@@ -74,9 +137,9 @@ async function updateGithubPage(md: string) {
 
   // Handle the response from the GitHub API
   if (response.ok) {
-    console.log("File updated successfully:", data);
+    console.log(`File ${operation} successfully`);
   } else {
-    console.error("Failed to update file:", data);
+    console.error(`Failed to ${operation} file:`, data);
   }
 }
 
@@ -98,12 +161,10 @@ async function getFileSHA(
     const response = await fetch(apiUrl, requestOptions);
     const data = await response.json();
 
-    console.log(JSON.stringify(data, null, 2));
-
     if (response.ok) {
       return data.sha;
     } else {
-      console.error("Failed to retrieve file information:", data);
+      console.error("New file");
       return null;
     }
   } catch (error) {
@@ -113,4 +174,20 @@ async function getFileSHA(
     );
     return null;
   }
+}
+
+function getFilenameFromHeader(header) {
+  // Convert to lowercase
+  let filename = header.toLowerCase().trim();
+
+  // Replace spaces with dashes
+  filename = filename.replace(/\s+/g, "-");
+
+  // Remove characters that are not letters, numbers, or dashes
+  filename = filename.replace(/[^a-z0-9-]/g, "");
+
+  // Append '.md' extension
+  filename += ".md";
+
+  return filename;
 }
