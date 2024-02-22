@@ -1,6 +1,6 @@
 # Apples Store Bedrift: At Bryde Ting Med Stil
 
-![Story Twister](<../images/GPT_story_twister.png>)
+![Story Twister](../images/apples-store-bedrift-at-bryde-ting-med-stil.webp)
 
 I en verden, hvor teknologi-giganter leger guder, har Apple taget skridtet videre for at sikre, at deres trofaste følgere (også kendt som EU-borgere) får en helt ny oplevelse: intet. Ja, du læste rigtigt. I deres seneste stræben efter innovation har Apple besluttet, at progressive web apps er så 2019 og derfor har de officielt droppet støtten for disse på iPhone i EU. Fordi, hvorfor gøre livet nemt, når man kan gøre det interessant?
 
@@ -12,5 +12,6 @@ Så der har du det, kære læser: Apples nyeste bedrift er ikke en revolutionere
 
 For at illustrere denne historie, lad os forestille os et billede i stilen af en karikeret, tegneserieagtig scene: Et kæmpe iPhone-tårn hersker over et lille europæisk landskab, mens forvirrede EU-borgere kløer sig i hovedet og kigger på deres nu ubrugelige web apps. Ovenover svæver en sky formet som et stort spørgsmålstegn, og i baggrunden ses Apple-logoet, der lyser op som en falsk frelser.
 
------
+---
+
 #### Created: February 22, 2024 at 8:00:14 PM UTC using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - 100
