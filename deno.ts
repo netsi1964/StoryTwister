@@ -1,20 +1,17 @@
 const kv = await Deno.openKv();
 let githubAccessToken: string;
-// Define the GitHub repository and file path
 const owner = "netsi1964";
 const repo = "StoryTwister";
 
+type JSONBody = {
+  [key: string]: string | JSONBody | null;
+};
+
 Deno.serve(async (req) => {
-  // Increment a count using Deno KV
   await kv.atomic().sum(["visitors"], 1n).commit();
-
-  // Invoke the function and wait for the href
   await loginToGithub();
-
-  // Get the latest visitor count
   const count = await kv.get(["visitors"]);
 
-  // Get the header and body from the request querystring
   let header = "# default header";
   let body = "Default body";
   let image = "";
@@ -47,7 +44,6 @@ Deno.serve(async (req) => {
 });
 
 function loginToGithub() {
-  // Retrieve the GitHub access token from the environment variables
   githubAccessToken = Deno.env.get("GITHUB_ACCESS_TOKEN") ?? "";
 
   if (!githubAccessToken) {
@@ -55,7 +51,6 @@ function loginToGithub() {
     Deno.exit(1);
   }
 
-  // You can now use the githubAccessToken to authenticate with the GitHub API using Deno's fetch API
   console.info("Access to Github granted");
 }
 
@@ -63,6 +58,7 @@ async function createGithubPage(
   filePath: string,
   header: string,
   body: string,
+  image: string,
   count: number
 ) {
   const sha = await getFileSHA(owner, repo, filePath, githubAccessToken);
@@ -74,68 +70,46 @@ async function createGithubPage(
     operation = "create";
   }
 
-  // Define the GitHub API endpoint for updating a file
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-  const imageUrl = `https://api.github.com/repos/${owner}/${repo}/contents/images/GPT_story_twister.png`;
+  const imageMarkdown = `![Story Twister](<../images/GPT_story_twister.png>)`;
 
-  let requestOptions;
   const content = b64(
-    `# ${header}\n![Story Twister GPT](${imageUrl})\n${body}\n\n-----\n${getPrettyDateTimeMarkdown()} - ${count}`;
+    `# ${header}\n\n${imageMarkdown}\n\n${body}\n\n-----\n${getFooter(count)}`
   );
 
-  if (operation === "update") {
-    // Define the PATCH request options
-    requestOptions = {
-      method: "PUT",
-      headers: {
-        Authorization: `token ${githubAccessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `Update file via Deno Deploy: ${new Date()}`,
-        content,
-        sha,
-        branch: "main",
-        committer: {
-          name: "Sten Hougaard",
-          email: "netsi1964@gmail.com",
-        },
-        author: {
-          name: "Sten Hougaard",
-          email: "netsi1964@gmail.com",
-        },
-      }),
-    };
-  } else {
-    // CREATE
-    requestOptions = {
-      method: "PUT", // Use PUT method to create or update a file
-      headers: {
-        Authorization: `token ${githubAccessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `Create a new file via Deno Deploy: ${new Date()}`, // Adjust the commit message to reflect file creation
-        content,
-        // Remove the sha line since it's not needed for a new file
-        branch: "main", // Specify the branch if needed, otherwise it defaults to the default branch
-        committer: {
-          name: "Sten Hougaard",
-          email: "netsi1964@gmail.com",
-        },
-        author: {
-          name: "Sten Hougaard",
-          email: "netsi1964@gmail.com",
-        },
-      }),
-    };
-  }
+  const JSONBody: JSONBody = {
+    content,
+    sha,
+    branch: "main",
+    committer: {
+      name: "Sten Hougaard",
+      email: "netsi1964@gmail.com",
+    },
+    author: {
+      name: "Sten Hougaard",
+      email: "netsi1964@gmail.com",
+    },
+  };
 
-  // Make the PATCH request using Deno's fetch API
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `token ${githubAccessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(JSONBody),
+  };
+
+  if (operation === "update") {
+    JSONBody.message = `Update file via Deno Deploy: ${new Date()}`;
+  } else if (operation === "create") {
+    JSONBody.message = `Create a new file via Deno Deploy: ${new Date()}`;
+  }
+  requestOptions.body = JSON.stringify(JSONBody);
+
   const response = await fetch(apiUrl, requestOptions);
   const data = await response.json();
 
-  // Handle the response from the GitHub API
   if (response.ok) {
     console.log(`File ${operation} successfully`);
   } else {
@@ -195,7 +169,7 @@ function b64(text: string): string {
   return "";
 }
 
-function getFilenameFromHeader(header) {
+function getFilenameFromHeader(header: string) {
   // Convert to lowercase
   let filename = header.toLowerCase().trim();
 
@@ -211,7 +185,7 @@ function getFilenameFromHeader(header) {
   return `stories/${filename}`;
 }
 
-function getPrettyDateTimeMarkdown() {
+function getFooter(count) {
   const now = new Date();
 
   // Use Intl.DateTimeFormat to format the date and time in a pretty English format
@@ -229,5 +203,5 @@ function getPrettyDateTimeMarkdown() {
   const prettyDateTime = dateFormatter.format(now);
 
   // Format as Markdown
-  return `#### Created: ${prettyDateTime}`;
+  return `#### Created: ${prettyDateTime} using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - ${count}`;
 }
