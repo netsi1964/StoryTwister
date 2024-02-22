@@ -40,7 +40,7 @@ Deno.serve(async (req) => {
   await createGithubPage(filePath, header, body, image);
 
   return new Response(
-    `Your story will be visible here: https://netsi1964.github.io/StoryTwister/${
+    `Your story will be visible here: https://${owner}.github.io/${repo}/stories/${
       filePath.split(".md")[0]
     }`
   );
