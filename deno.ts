@@ -37,10 +37,10 @@ Deno.serve(async (req) => {
   body = body ?? "body";
 
   const filePath = getFilenameFromHeader(header);
-  await createGithubPage(filePath, header, body, image);
+  await createGithubPage(filePath, header, body, image, count.value);
 
   return new Response(
-    `Your story will be visible here: https://${owner}.github.io/${repo}/stories/${
+    `Your story will be visible here: https://${owner}.github.io/${repo}/${
       filePath.split(".md")[0]
     }`
   );
@@ -63,7 +63,7 @@ async function createGithubPage(
   filePath: string,
   header: string,
   body: string,
-  image: string
+  count: number
 ) {
   const sha = await getFileSHA(owner, repo, filePath, githubAccessToken);
   let operation = "Unknown";
@@ -76,10 +76,11 @@ async function createGithubPage(
 
   // Define the GitHub API endpoint for updating a file
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+  const imageUrl = `https://api.github.com/repos/${owner}/${repo}/contents/images/GPT_story_twister.png`;
 
   let requestOptions;
   const content = b64(
-    `# ${header}\n\n${body}\n\n-----\n${getPrettyDateTimeMarkdown()}`
+    `# ${header}\n![Story Twister GPT](${imageUrl})\n${body}\n\n-----\n${getPrettyDateTimeMarkdown()} - ${count}`;
   );
 
   if (operation === "update") {
@@ -207,7 +208,7 @@ function getFilenameFromHeader(header) {
   // Append '.md' extension
   filename += ".md";
 
-  return filename;
+  return `stories/${filename}`;
 }
 
 function getPrettyDateTimeMarkdown() {
