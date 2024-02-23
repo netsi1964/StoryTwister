@@ -35,12 +35,7 @@ Deno.serve(async (req) => {
 
   const filePath = getFilenameFromHeader(header);
   await createGithubPage(filePath, header, body, image, count.value);
-
-  return new Response(
-    `Your story will be visible here: https://${owner}.github.io/${repo}/${
-      filePath.split(".md")[0]
-    }`
-  );
+  return new Response(`Your story will be visible here: https://github.com/${owner}/${repo}/blob/main/${filePath}`);
 });
 
 function loginToGithub() {
@@ -205,3 +200,4 @@ function getFooter(count) {
   // Format as Markdown
   return `#### Created: ${prettyDateTime} using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - ${count}`;
 }
+
