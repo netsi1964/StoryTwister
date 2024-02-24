@@ -11,3 +11,4 @@ image: GPT_story_twister.png
 ## Example stories
 
 - [Den uheldige saga om Flådens Fumlende Fregatter](Den uheldige saga om Flådens Fumlende Fregatter.html)
+- [Apple Store Bedrift: At Bryde Ting Med Stil](Apple Store Bedrift: At Bryde Ting Med Stil.html)
