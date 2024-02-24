@@ -1,5 +1,6 @@
 # Pengene der Eksploderede – En Satirisk Fortælling om Våben og Krige
-![Generated using Story Twister GPT](https://files.oaiusercontent.com/file-2wOhUhU2ciQsYJhT0tRj9Mgh?se=2024-02-21T22%3A52%3A48Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Db9b90b6d-5db8-425e-9e2d-0705e342dcce.webp&sig=AvUins6EyNwAfmlpTWm%2BTqyAli7MT64jnG5uuqH8%2B30%3D "Generated using Story Twister GPT")
+
+![Pengene der Eksploderede – En Satirisk Fortælling om Våben og Krige)](../images/GPT_story_twister.png)
 
 I det fjerne kongerige Cashlandia, hvor penge voksede på træerne og skatteydernes lommer aldrig syntes at tømme, regerede Kong Spendalot med et jernkreditkort. Hans yndlingshobby var ikke at samle frimærker eller dyrke roser, men derimod at investere i det allernyeste indenfor våben og krigsteknologi. Han elskede at prale af sin samling af guld-belagte kampvogne og diamantbesatte droner, alt imens hans undersåtter rystede på hovedet i vantro.
 

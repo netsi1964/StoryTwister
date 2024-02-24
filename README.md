@@ -6,6 +6,10 @@ Container for stories created using GPT Story Twister
 
 > This is documentation and container of generated stories using my GPT "[GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister)". It was created partly to document my work building a GPT using OpenAI GPTs, and also so that you can perhaps use it in your own projects. You are welcome to create ideas or findings through an Github Issue. Hope you enjoy it!
 
+## Generated stories
+
+You can find a list of the generated stories in the [GPT Story Twister](https://netsi1964.github.io/StoryTwister/)
+
 ## How to use
 
 TODO

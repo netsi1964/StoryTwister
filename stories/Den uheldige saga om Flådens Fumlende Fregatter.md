@@ -1,11 +1,6 @@
----
-layout: page
-title: "Den uheldige saga om Flådens Fumlende Fregatter"
----
-
 # Den uheldige saga om Flådens Fumlende Fregatter
 
-![Den uheldige saga om Flådens Fumlende Fregatter](<images/Den uheldige saga om Flådens Fumlende Fregatter.webp>)
+![Den uheldige saga om Flådens Fumlende Fregatter](../images/den-uheldige-saga-om-Flaadens-fumlende-fregatter.webp)
 
 Engang i et land langt mod nord, i de isbelagte farvande omkring et sted kaldet Grønland, fandt de mest uheldige skibe i historien hjem: Inspektionsfartøjerne "Lauge Løkkehjul" og "Ejnar Mekaniksvigt". Disse skibe, kendt som flådens stolthed i det arktiske farvand, blev pludselig ramt af en uheldig skæbne: de kunne hverken skyde ordentligt eller sejle.
 
@@ -22,3 +17,7 @@ Og så var der flyene og satellitterne, der blev indkaldt som backup. "Hvis du f
 I denne saga om de uheldige fregatter, der hverken kunne skyde eller sejle, viser det sig, at det eneste, der virkelig var i stand til at bevæge sig, var humor og ironi - og måske en og anden kaffemaskine, hvis de besluttede at samarbejde.
 
 Lad os nu bringe denne satiriske saga til live med en illustration i en "whimsical cartoonish" stil, der forestiller "Lauge Løkkehjul" og "Ejnar Mekaniksvigt" som tegneseriefigurer, der slapper af i havnen i Nuuk med kaffekopper i "hånden", mens "Hvidbjørnen" ser forvirret ud i baggrunden, omgivet af isbjerge og en flyvende satellit, der ser ned på dem med et forvirret udtryk."
+
+---
+
+#### Created using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister)

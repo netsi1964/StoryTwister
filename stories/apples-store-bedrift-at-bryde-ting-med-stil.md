@@ -1,6 +1,6 @@
 # Apples Store Bedrift: At Bryde Ting Med Stil
 
-![Story Twister](../images/apples-store-bedrift-at-bryde-ting-med-stil.webp)
+![Apples Store Bedrift: At Bryde Ting Med Stil](../images/apples-store-bedrift-at-bryde-ting-med-stil.webp)
 
 I en verden, hvor teknologi-giganter leger guder, har Apple taget skridtet videre for at sikre, at deres trofaste følgere (også kendt som EU-borgere) får en helt ny oplevelse: intet. Ja, du læste rigtigt. I deres seneste stræben efter innovation har Apple besluttet, at progressive web apps er så 2019 og derfor har de officielt droppet støtten for disse på iPhone i EU. Fordi, hvorfor gøre livet nemt, når man kan gøre det interessant?
 

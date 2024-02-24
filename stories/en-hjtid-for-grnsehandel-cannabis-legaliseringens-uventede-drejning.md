@@ -1,10 +1,10 @@
 # En Højtid for Grænsehandel: Cannabis Legaliseringens Uventede Drejning
 
-![Story Twister](<../images/GPT_story_twister.png>)
+![En Højtid for Grænsehandel: Cannabis Legaliseringens Uventede Drejning)](../images/en-hjtid-for-grnsehandel-cannabis-legaliseringens-uventede-drejning.webp)
 
 Forestil jer en verden, hvor grænsehandlen mellem Danmark og Tyskland tager en uventet drejning, og det er ikke længere de gode gamle dåsebajere eller den billige Nutella, der lokker danskerne sydpå. Nej, fra 1. april, i et skæbnesvangert twist af ironi, bliver det muligt for enhver med en smule grønne fingre og en forkærlighed for den søde duft af frihed – eller skal vi sige cannabis – at dyrke deres egne planter hjemme i stuen, helt lovligt, på tysk jord.
 
-"Aabenraa Kommunes sundhedschef, Michael Metzsch – lad os kalde ham Michael 'Metz' for sjov – udtrykker dyb bekymring. Tænk sig, sønderjyderne, disse normalt så fredelige grænsehandlende sjæle, kunne finde på at vandre over grænsen for at forsyne sig med noget så skandaløst som cannabis. Hvor er verden på vej hen, når en tur til Flensborg kan ende med mere end blot en kasse pilsnere og en pose Haribo? 
+"Aabenraa Kommunes sundhedschef, Michael Metzsch – lad os kalde ham Michael 'Metz' for sjov – udtrykker dyb bekymring. Tænk sig, sønderjyderne, disse normalt så fredelige grænsehandlende sjæle, kunne finde på at vandre over grænsen for at forsyne sig med noget så skandaløst som cannabis. Hvor er verden på vej hen, når en tur til Flensborg kan ende med mere end blot en kasse pilsnere og en pose Haribo?
 
 Og tænk, fra nu af vil "grænsehandel" få en helt ny betydning. Forestil jer scener, hvor sønderjyske borgmestre står med hænderne i håret (eller hvad der er tilbage af det), mens de græder over tabet af ungdommen til de forførende hash-klubber syd for grænsen. 'Tænk på børnene!', skriger de, mens visionsbilleder af hashklubber, hvor alle er venner, og cannabisplanter gror i fællesskab, danser i deres hoveder.
 
@@ -18,5 +18,6 @@ Alt imens drømmer indehaveren af en head shop i Flensborg om en fremtid, hvor g
 
 Så mens vi står her på tærsklen til en ny æra af grænsehandel, kan vi kun spørge os selv: Er vi klar til den høje tid, der venter? Eller vil vi bare blive ved med at hænge fast i fortidens dåsebajere og billige chokolade, uvidende om de grønne horisonter, der venter lige over grænsen?
 
------
+---
+
 #### Created: February 23, 2024 at 10:25:15 AM UTC using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - 102
