@@ -70,7 +70,7 @@ async function createGithubPage(
   }
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-  const imageMarkdown = `![Story Twister](<../images/GPT_story_twister.png>)`;
+  const imageMarkdown = `![Story Twister](<images/GPT_story_twister.png>)`;
 
   const content = b64(
     marked(

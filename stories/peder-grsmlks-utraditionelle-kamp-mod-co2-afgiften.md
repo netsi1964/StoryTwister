@@ -1,6 +1,6 @@
 # Peder Grøsmølks utraditionelle kamp mod CO2-afgiften
 
-![Peder Grøsmølks utraditionelle kamp mod CO2-afgiften)](../images/GPT_story_twister.png)
+![Peder Grøsmølks utraditionelle kamp mod CO2-afgiften)](images/GPT_story_twister.png)
 
 I det fiktive land af Venligstre stod Peder Grøsmølk, en passioneret landmand og mangeårigt medlem af partiet Venligstre, over for en stor udfordring. CO2-afgiften truede med at omvælte hele landbruget, men Peder havde ikke tænkt sig at tie stille. Han havde en plan, en vision om et bæredygtigt landbrug, hvor hver dråbe økologisk vin og hver økobajer bidrog til en bedre verden.
 

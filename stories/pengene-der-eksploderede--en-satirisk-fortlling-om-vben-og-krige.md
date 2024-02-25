@@ -1,6 +1,6 @@
 # Pengene der Eksploderede – En Satirisk Fortælling om Våben og Krige
 
-![Pengene der Eksploderede – En Satirisk Fortælling om Våben og Krige)](../images/GPT_story_twister.png)
+![Pengene der Eksploderede – En Satirisk Fortælling om Våben og Krige)](images/GPT_story_twister.png)
 
 I det fjerne kongerige Cashlandia, hvor penge voksede på træerne og skatteydernes lommer aldrig syntes at tømme, regerede Kong Spendalot med et jernkreditkort. Hans yndlingshobby var ikke at samle frimærker eller dyrke roser, men derimod at investere i det allernyeste indenfor våben og krigsteknologi. Han elskede at prale af sin samling af guld-belagte kampvogne og diamantbesatte droner, alt imens hans undersåtter rystede på hovedet i vantro.
 
