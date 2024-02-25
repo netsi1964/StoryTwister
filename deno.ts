@@ -78,7 +78,7 @@ async function createGithubPage(
   const markdown = marked(
     `# ${header}\n\n${imageMarkdown}\n\n${body}\n\n-----\n${getFooter(count)}`
   );
-  const content = b64(toHTMLPage(markdown));
+  const content = b64(toHTMLPage(header, markdown));
 
   const JSONBody: JSONBody = {
     content,
@@ -207,19 +207,38 @@ function getFooter(count) {
   return `#### Created: ${prettyDateTime} using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - ${count}`;
 }
 
-function toHTMLPage(body: string): string {
+function toHTMLPage(header: string, body: string): string {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Story Twister</title>
+    <title>${header}</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
   <main
-    ${body}
+    ${getUtf8Encoded(body)}
     </main>
   </body>
 </html>`;
+}
+
+function fixEncodingIssues(string: string): string {
+  // Manually replace known problematic sequences or characters
+  return string.replace(/�/g, "æ").replace(/�/g, "ø").replace(/�/g, "å");
+  // Add more replacements as needed
+}
+
+function getUtf8Encoded(string: string): string {
+  // First, attempt to fix known encoding issues
+  string = fixEncodingIssues(string);
+
+  // Then, proceed with encoding and decoding
+  const encoder = new TextEncoder();
+  const encoded = encoder.encode(string);
+  const decoder = new TextDecoder("utf-8");
+  const decoded = decoder.decode(encoded);
+
+  return decoded;
 }
