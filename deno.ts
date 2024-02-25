@@ -1,3 +1,5 @@
+import { marked } from "https://cdn.skypack.dev/marked@4.0.10";
+
 const kv = await Deno.openKv();
 let githubAccessToken: string;
 const owner = "netsi1964";
@@ -35,7 +37,9 @@ Deno.serve(async (req) => {
 
   const filePath = getFilenameFromHeader(header);
   await createGithubPage(filePath, header, body, image, count.value);
-  return new Response(`Your story will be visible here: https://github.com/${owner}/${repo}/blob/main/${filePath}`);
+  return new Response(
+    `Your story will be visible here: https://github.com/${owner}/${repo}/blob/main/${filePath}`
+  );
 });
 
 function loginToGithub() {
@@ -69,7 +73,9 @@ async function createGithubPage(
   const imageMarkdown = `![Story Twister](<../images/GPT_story_twister.png>)`;
 
   const content = b64(
-    `# ${header}\n\n${imageMarkdown}\n\n${body}\n\n-----\n${getFooter(count)}`
+    marked(
+      `# ${header}\n\n${imageMarkdown}\n\n${body}\n\n-----\n${getFooter(count)}`
+    )
   );
 
   const JSONBody: JSONBody = {
@@ -172,10 +178,8 @@ function getFilenameFromHeader(header: string) {
   filename = filename.replace(/\s+/g, "-");
 
   // Remove characters that are not letters, numbers, or dashes
-  filename = filename.replace(/[^a-z0-9-]/g, "");
-
-  // Append '.md' extension
-  filename += ".md";
+  filename = "html/" + filename.replace(/[^a-z0-9-]/g, "");
+  filename += ".html";
 
   return `stories/${filename}`;
 }
@@ -200,4 +204,3 @@ function getFooter(count) {
   // Format as Markdown
   return `#### Created: ${prettyDateTime} using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - ${count}`;
 }
-
