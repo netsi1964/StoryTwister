@@ -10,6 +10,10 @@ Container for stories created using GPT Story Twister
 
 You can find a list of the generated stories in the [GPT Story Twister](https://netsi1964.github.io/StoryTwister/)
 
+## Using Gatsby to publish stories to Netlify
+
+I will use this Gatsby builder: [gatsby-starter-minimal-blog](https://www.gatsbyjs.com/starters/LekoArts/gatsby-starter-minimal-blog/)
+
 ## How to use
 
 TODO
