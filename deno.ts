@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
   const filePath = getFilenameFromHeader(header);
   await createGithubPage(filePath, header, body, image, count.value);
   return new Response(
-    `Your story will be visible here: https://github.com/${owner}/${repo}/blob/main/${filePath}`
+    `Your story will be visible here in around 3 minuter: https://story-twister.netlify.app/${filePath}`
   );
 });
 
@@ -72,11 +72,10 @@ async function createGithubPage(
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
   const imageMarkdown = `![Story Twister](images/GPT_story_twister.png)`;
 
-  const content = b64(
-    marked(
-      `# ${header}\n\n${imageMarkdown}\n\n${body}\n\n-----\n${getFooter(count)}`
-    )
+  const markdown = marked(
+    `# ${header}\n\n${imageMarkdown}\n\n${body}\n\n-----\n${getFooter(count)}`
   );
+  const content = b64(toHTMLPage(markdown));
 
   const JSONBody: JSONBody = {
     content,
@@ -203,4 +202,21 @@ function getFooter(count) {
 
   // Format as Markdown
   return `#### Created: ${prettyDateTime} using [GPT Story Twister](https://chat.openai.com/g/g-mBiNy6U9S-story-twister) - ${count}`;
+}
+
+function toHTMLPage(body: string): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Story Twister</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+  <main
+    ${body}
+    </main>
+  </body>
+</html>`;
 }

@@ -16,3 +16,20 @@ for (const story of stories) {
     );
   }
 }
+
+function toHTMLPage(body: string): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Story Twister</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+  <main
+    ${body}
+    </main>
+  </body>
+</html>`;
+}
