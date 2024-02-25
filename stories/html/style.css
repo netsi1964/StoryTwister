@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3em;
+}
+main {
+    width: 70vw; 
+    padding-bottom: 3em;
+}
+
+img {
+    max-width: 100%;
+}
