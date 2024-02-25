@@ -38,7 +38,10 @@ Deno.serve(async (req) => {
   const filePath = getFilenameFromHeader(header);
   await createGithubPage(filePath, header, body, image, count.value);
   return new Response(
-    `Your story will be visible here in around 3 minuter: https://story-twister.netlify.app/${filePath}`
+    `Your story will be visible here in around 3 minuter: https://story-twister.netlify.app/${filePath.replace(
+      "stories/html/",
+      ""
+    )}`
   );
 });
 
