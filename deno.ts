@@ -37,6 +37,8 @@ Deno.serve(async (req) => {
 
   const filePath = getFilenameFromHeader(header);
   await createGithubPage(filePath, header, body, image, count.value);
+  const list = await generateHtmlList();
+  console.log(list);
   return new Response(
     `Your story will be visible here in around 3 minuter: https://story-twister.netlify.app/${filePath.replace(
       "stories/html/",
@@ -217,7 +219,7 @@ function toHTMLPage(header: string, body: string): string {
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-  <main
+  <main>
     ${getUtf8Encoded(body)}
     </main>
   </body>
@@ -241,4 +243,46 @@ function getUtf8Encoded(string: string): string {
   const decoded = decoder.decode(encoded);
 
   return decoded;
+}
+
+async function generateHtmlList(): Promise<string> {
+  const path = "stories/html";
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      headers: { Accept: "application/vnd.github.v3+json" },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch directory contents");
+    }
+    const files = await response.json();
+
+    const ignore = ["-default-header.html"];
+
+    // Filter for .html files and generate list items
+    const listItems = files
+      .filter(
+        (file) =>
+          file.name.endsWith(".html") &&
+          !ignore.some((ignoreItem) => file.name.includes(ignoreItem))
+      )
+      .sort((a, b) => a.name.localeCompare(b.name)) // Sorting alphabetically by name
+      .map((file) => {
+        // Removing the .html extension and prepending the base URL
+        const filenameWidthExtenstion = file.name;
+        const fileNameWithoutExtension = filenameWidthExtenstion.replace(
+          ".html",
+          ""
+        );
+        const displayName = fileNameWithoutExtension.replace(/-/g, " "); // Replace dashes with spaces for display
+        return `<li><a href="https://story-twister.netlify.app/${filenameWidthExtenstion}">${displayName}</a></li>\n`;
+      })
+      .join("");
+
+    return toHTMLPage("Story Twister stories", `<ol>\n${listItems}\n</ol>`);
+  } catch (error) {
+    console.error("Error generating HTML list:", error);
+    return ""; // Return an empty string or appropriate error message
+  }
 }
